@@ -2,3 +2,4 @@
 jupyterlab/
 result
 *.orig
+*.ipynb

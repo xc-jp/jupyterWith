@@ -1,3 +1,5 @@
+{pkg-def-extras}:
+
 self: super:
 let
   importCabal = args: import "${callCabalToNix args}";
@@ -18,12 +20,16 @@ let
       inherit name cabal-file;
     };
 
-  inherit (self.haskell-nix) mkPkgSet mkStackPkgSet stackage hackage callCabalToNix excludeBootPackages;
+  inherit (self) haskell-nix;
+  inherit (haskell-nix) mkPkgSet mkStackPkgSet stackage hackage callCabalToNix excludeBootPackages;
 
   pkg-set = mkStackPkgSet {
     stack-pkgs = {
       resolver = "lts-14.13";
       extras = hackage: {};
+    };
+    pkg-def-extras = pkg-def-extras {
+      inherit haskell-nix;
     };
     modules = [{
       nonReinstallablePkgs =

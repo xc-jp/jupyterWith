@@ -2,26 +2,26 @@ let defaultPkgSet = {haskell-nix, pkg-def-extras}:
   let
     inherit (haskell-nix) mkStackPkgSet;
   in mkStackPkgSet {
-    stack-pkgs = {
-      resolver = "lts-14.13";
-      extras = hackage: {};
-    };
-    inherit pkg-def-extras;
-    modules = [{
-      nonReinstallablePkgs =
-          [ "rts" "ghc-heap" "ghc-prim" "integer-gmp" "integer-simple" "base"
-            "deepseq" "array" "ghc-boot-th" "pretty" "template-haskell"
-            "ghc-boot"
-            "ghc" "Cabal" "Win32" "array" "binary" "bytestring" "containers"
-            "directory" "filepath" "ghc-boot" "ghc-compact" "ghc-prim"
-            "ghci" "haskeline"
-            "hpc"
-            "mtl" "parsec" "process" "text" "time" "transformers"
-            "unix" "xhtml"
-            "stm" "terminfo"
-          ];
-    }];
-};
+      stack-pkgs = {
+        resolver = "lts-14.13";
+        extras = hackage: {};
+      };
+      inherit pkg-def-extras;
+      modules = [{
+        nonReinstallablePkgs =
+            [ "rts" "ghc-heap" "ghc-prim" "integer-gmp" "integer-simple" "base"
+              "deepseq" "array" "ghc-boot-th" "pretty" "template-haskell"
+              "ghc-boot"
+              "ghc" "Cabal" "Win32" "array" "binary" "bytestring" "containers"
+              "directory" "filepath" "ghc-boot" "ghc-compact" "ghc-prim"
+              "ghci" "haskeline"
+              "hpc"
+              "mtl" "parsec" "process" "text" "time" "transformers"
+              "unix" "xhtml"
+              "stm" "terminfo"
+            ];
+      }];
+  }.config.hsPkgs;
 in
 {pkg-set ? defaultPkgSet
 }:
@@ -47,5 +47,5 @@ let
   };
 in
 {
-  ihaskellPackages = packages.config.hsPkgs;
+  ihaskellPackages = packages;
 }

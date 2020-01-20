@@ -1,6 +1,6 @@
-let defaultPackages = {haskell-nix, pkg-def-extras}:
+let defaultPackages = self': super': {pkg-def-extras}:
   let
-    inherit (haskell-nix) mkStackPkgSet;
+    inherit (self'.haskell-nix) mkStackPkgSet;
   in mkStackPkgSet {
       stack-pkgs = {
         resolver = "lts-14.13";
@@ -23,12 +23,10 @@ let defaultPackages = {haskell-nix, pkg-def-extras}:
       }];
   }.config.hsPkgs;
 in
-{packages ? defaultPackages
-}:
+{packages ? defaultPackages}:
 self: super:
 {
-  ihaskellPackages = packages {
-    inherit (self) haskell-nix;
+  ihaskellPackages = packages self super {
     pkg-def-extras = [(hackage: {
       ihaskell-aeson = hackage.ihaskell-aeson."0.3.0.1".revisions.default;
       ihaskell-blaze = hackage.ihaskell-blaze."0.3.0.1".revisions.default;

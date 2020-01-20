@@ -1,4 +1,4 @@
-let defaultPkgSet = {haskell-nix, pkg-def-extras}:
+let defaultPackages = {haskell-nix, pkg-def-extras}:
   let
     inherit (haskell-nix) mkStackPkgSet;
   in mkStackPkgSet {
@@ -23,11 +23,11 @@ let defaultPkgSet = {haskell-nix, pkg-def-extras}:
       }];
   }.config.hsPkgs;
 in
-{pkg-set ? defaultPkgSet
+{packages ? defaultPackages
 }:
 self: super:
-let
-  packages = pkg-set {
+{
+  ihaskellPackages = packages {
     inherit (self) haskell-nix;
     pkg-def-extras = [(hackage: {
       ihaskell-aeson = hackage.ihaskell-aeson."0.3.0.1".revisions.default;
@@ -45,7 +45,4 @@ let
       ihaskell-hvega = hackage.ihaskell-hvega."0.2.0.2".revisions.default;
     })];
   };
-in
-{
-  ihaskellPackages = packages;
 }

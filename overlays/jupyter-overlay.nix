@@ -23,7 +23,7 @@ let
   '';
 
   # JupyterLab with the appropriate kernel and directory setup.
-  jupyterlabWith = { directory ? defaultDirectory, kernels ? [] }:
+  jupyterlabWith = { directory ? defaultDirectory, kernels ? [ ] }:
     let
       # PYTHONPATH setup for JupyterLab
       pythonPath = python3.makePythonPath [
@@ -34,35 +34,32 @@ let
       ];
 
       # JupyterLab executable wrapped with suitable environment variables.
-      jupyterlab = python3.toPythonModule (
-        python3.jupyterlab.overridePythonAttrs (oldAttrs: {
+      jupyterlab = python3.toPythonModule
+        (python3.jupyterlab.overridePythonAttrs (oldAttrs: {
           makeWrapperArgs = [
             "--set JUPYTERLAB_DIR ${directory}"
             "--set JUPYTER_PATH ${kernelsString kernels}"
             "--set PYTHONPATH ${pythonPath}"
           ];
-        })
-      );
+        }));
 
       env = pkgs.mkShell {
         name = "jupyterlab-shell";
-        buildInputs =
-          [ jupyterlab generateDirectory pkgs.nodejs-12_x ] ++ (map (k: k.runtimePackages) kernels);
+        buildInputs = [ jupyterlab generateDirectory pkgs.nodejs-12_x ]
+          ++ (map (k: k.runtimePackages) kernels);
         shellHook = ''
           export JUPYTER_PATH=${kernelsString kernels}
           export JUPYTERLAB=${jupyterlab}
         '';
       };
-    in
-      jupyterlab.override (oldAttrs: {
-        passthru = oldAttrs.passthru or {} // { inherit env; };
-      });
+    in jupyterlab.override
+    (oldAttrs: { passthru = oldAttrs.passthru or { } // { inherit env; }; });
 in {
   jupyterWith = {
     inherit jupyterlabWith;
     kernels = {
       iHaskellWith = self.callPackage ../kernels/ihaskell;
-      juniperWith = self.callPackage ../kernels/juniper;
+      # juniperWith = self.callPackage ../kernels/juniper;
       iPythonWith = self.callPackage ../kernels/ipython;
       iRubyWith = self.callPackage ../kernels/iruby;
       cKernelWith = self.callPackage ../kernels/ckernel;

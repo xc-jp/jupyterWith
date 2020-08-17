@@ -1,8 +1,5 @@
-let
-  inherit (import ../lib/null.nix) removeNulls;
-in
-{packages}:
-[ (import ./python-overlay.nix)
-  (import ./haskell-overlay.nix (removeNulls { inherit packages; }))
+[
+  (import ./python-overlay.nix)
+  (import ./haskell-overlay.nix)
   (import ./jupyter-overlay.nix)
 ]

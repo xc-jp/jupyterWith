@@ -7,12 +7,13 @@
 }:
 
 buildPythonPackage rec {
+  # https://pypi.org/project/jsonschema/#history
   pname = "jsonschema";
-  version = "3.1.1";
+  version = "3.2.0";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "2fa0684276b6333ff3c0b1b27081f4b2305f0a36cf702a23db50edb141893c3f";
+    sha256 = "0ykr61yiiizgvm3bzipa3l73rvj49wmrybbfwhvpgk3pscl5pa68";
   };
 
   nativeBuildInputs = [ setuptools_scm ];

@@ -4,6 +4,7 @@
 }:
 
 buildPythonPackage rec {
+  # https://pypi.org/project/jupyter_c_kernel/#history
   pname = "jupyter_c_kernel";
   version = "1.2.2";
   doCheck = false;

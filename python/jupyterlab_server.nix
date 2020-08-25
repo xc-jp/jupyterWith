@@ -10,13 +10,14 @@
 }:
 
 buildPythonPackage rec {
+  # https://pypi.org/project/jupyterlab-server/#history
   pname = "jupyterlab_server";
-  version = "1.0.6";
-  disabled = pythonOlder "3.5";
+  version = "1.2.0";
+  disabled = pythonOlder "3.7";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "d0977527bfce6f47c782cb6bf79d2c949ebe3f22ac695fa000b730c671445dad";
+    sha256 = "132xby7531rbrjg9bqvsx86birr1blynjxy8gi5kcnb6x7fxjcal";
   };
 
   checkInputs = [ requests pytest ];

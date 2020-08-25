@@ -21,7 +21,7 @@ in {
   ];
   ihaskellPackages = (mkStackPkgSet {
     stack-pkgs = {
-      resolver = "lts-14.13";
+      resolver = "lts-14.27";
       extras = hackage: { };
     };
     pkg-def-extras = self.ihaskell-pkg-def-extras;

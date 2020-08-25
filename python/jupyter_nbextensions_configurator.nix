@@ -5,6 +5,7 @@
 }:
 
 buildPythonPackage rec {
+  # https://pypi.org/project/jupyter_nbextensions_configurator/#history
   pname = "jupyter_nbextensions_configurator";
   version = "0.4.1";
   src = fetchPypi {

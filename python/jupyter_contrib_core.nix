@@ -6,6 +6,7 @@
 }:
 
 buildPythonPackage rec {
+  # https://pypi.org/project/jupyter_contrib_core/#history
   pname = "jupyter_contrib_core";
   version = "0.3.3";
   src = fetchPypi {

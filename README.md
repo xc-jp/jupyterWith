@@ -31,11 +31,11 @@ Interview with @considerate:
 
 >The main reason is to use haskell.nix and to avoid all non-ideomatic nix code in the upstream version.
 
-> [Use of overlays] is part of it. They also specify dependencies in my opinion a very convoluted way:
+> [Use of overlays] is part of it. They also specify dependencies in my opinion a convoluted way:
 
->[Here](https://github.com/xc-jp/jupyterWith/blob/ab6ad8e6e8245c4dbb5d579b15f813373196792d/default.nix#L2) they allow for extra overlays passed, [here](https://github.com/xc-jp/jupyterWith/blob/ab6ad8e6e8245c4dbb5d579b15f813373196792d/nix/default.nix#L10) they import a pinned version of __nixpkgs__ that you can't really override. [Here](https://github.com/xc-jp/jupyterWith/blob/ab6ad8e6e8245c4dbb5d579b15f813373196792d/nix/haskell-overlay.nix#L75) they override haskell packages with an overlay of those packages and pin everything to a specific version of __ghc__ .
+>[Here](https://github.com/xc-jp/jupyterWith/blob/ab6ad8e6e8245c4dbb5d579b15f813373196792d/default.nix#L2) they allow for extra overlays passed, [here](https://github.com/xc-jp/jupyterWith/blob/ab6ad8e6e8245c4dbb5d579b15f813373196792d/nix/default.nix#L10) they import a pinned version of __nixpkgs__ that you can't really override. [Here](https://github.com/xc-jp/jupyterWith/blob/ab6ad8e6e8245c4dbb5d579b15f813373196792d/nix/haskell-overlay.nix#L75) they override haskell packages with an overlay of those packages and pin everything to a specific version of *ghc* .
 
-> The more important point is that we want to use haskell.nix, and now since haskell nix has improved a lot since I did the rewrite of *jupyterWith* we would be able to simplify our builds quite a bit.
+> The more important point is that we want to use *haskell.nix*, and now since *haskell.nix* has improved a lot since I did the rewrite of *jupyterWith* we would be able to simplify our builds quite a bit.
 
 
 ## Getting started

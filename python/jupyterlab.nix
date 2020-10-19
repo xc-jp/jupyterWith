@@ -7,13 +7,15 @@
 }:
 
 buildPythonPackage rec {
+  # https://jupyterlab.readthedocs.io/en/stable/getting_started/changelog.html
+  # https://pypi.org/project/jupyterlab/#history
   pname = "jupyterlab";
-  version = "1.2.3";
-  disabled = pythonOlder "3.5";
+  version = "2.2.8";
+  disabled = pythonOlder "3.7";
 
   src = fetchPypi {
     inherit pname version;
-    sha256 = "2188a9bcaaf0b6a68ff9098a481f37ece8231634b862fd3c9adedc466aac79f2";
+    sha256 = "134b1i0hi0by62ajqqmyqksvffj46pzgjjcrwz0ijjah63p7ndy8";
   };
 
   propagatedBuildInputs = [ jupyterlab_server notebook ];

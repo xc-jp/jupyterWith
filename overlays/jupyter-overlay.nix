@@ -7,6 +7,8 @@ let
 
   # Default configuration.
   defaultDirectory = "${python3.jupyterlab}/share/jupyter/lab";
+  defaultExtraPackages = p: [];
+  defaultExtraInputsFrom = p: [];
 
   generateDirectory = pkgs.writeScriptBin "generate-directory" ''
     if [ $# -eq 0 ]
@@ -23,7 +25,13 @@ let
   '';
 
   # JupyterLab with the appropriate kernel and directory setup.
-  jupyterlabWith = { directory ? defaultDirectory, kernels ? [ ] }:
+  jupyterlabWith = {
+    directory ? defaultDirectory,
+    kernels ? [ ],
+    extraPackages ? defaultExtraPackages,
+    extraInputsFrom ? defaultExtraInputsFrom,
+    extraJupyterPath ? _: ""
+  }:
     let
       # PYTHONPATH setup for JupyterLab
       pythonPath = python3.makePythonPath [
@@ -38,15 +46,17 @@ let
         (python3.jupyterlab.overridePythonAttrs (oldAttrs: {
           makeWrapperArgs = [
             "--set JUPYTERLAB_DIR ${directory}"
-            "--set JUPYTER_PATH ${kernelsString kernels}"
-            "--set PYTHONPATH ${pythonPath}"
+            "--set JUPYTER_PATH ${extraJupyterPath pkgs}:${kernelsString kernels}"
+            "--set PYTHONPATH ${extraJupyterPath pkgs}:${pythonPath}"
           ];
         }));
 
       env = pkgs.mkShell {
         name = "jupyterlab-shell";
+        inputsFrom = extraInputsFrom pkgs;
         buildInputs = [ jupyterlab generateDirectory pkgs.nodejs-12_x ]
-          ++ (map (k: k.runtimePackages) kernels);
+          ++ (map (k: k.runtimePackages) kernels)
+          ++ (extraPackages pkgs);
         shellHook = ''
           export JUPYTER_PATH=${kernelsString kernels}
           export JUPYTERLAB=${jupyterlab}
